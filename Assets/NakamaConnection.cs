@@ -8,6 +8,12 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+
+
+using System.Linq;
+using System.Threading.Tasks;
+
+
 public class NakamaConnection : MonoBehaviour
 {
     //UI Swaps
@@ -39,6 +45,9 @@ public class NakamaConnection : MonoBehaviour
         JoinRoomButton.onClick.AddListener(JoinChatRoom);
         SendMessageButton.onClick.AddListener(SendMessage);
     }
+
+    private UnityMainThreadDispatcher mainThread;
+    private async void Start() { mainThread = UnityMainThreadDispatcher.Instance(); }
 
     public bool Testing = true;
     async void SubmitLogin()
@@ -73,7 +82,10 @@ public class NakamaConnection : MonoBehaviour
         socket.Connected += () => Debug.Log("Socket Connected");
         socket.Closed += () => Debug.Log("Socket Closed");
 
-        socket.ReceivedChannelMessage += message => Debug.Log("message received " + message);
+        // Get a reference to the UnityMainThreadDispatcher.
+        // We use this to queue event handler callbacks on the main thread.
+        // If we did not do this, we would not be able to instantiate objects or manipulate things like UI.
+        socket.ReceivedChannelMessage += message => mainThread.Enqueue(() => UpdateChat(message));
 
         //actually connects to the socket
         await socket.ConnectAsync(session);
@@ -82,6 +94,7 @@ public class NakamaConnection : MonoBehaviour
         LoginPanel.SetActive(false);
         ChatRoomPanel.SetActive(true);
     }
+
 
     async void JoinChatRoom()
     {
@@ -102,12 +115,24 @@ public class NakamaConnection : MonoBehaviour
 
         //converts the message to a string
         var content = new Dictionary<string, string> { { "Hello", message } }.ToJson();
-      
+
         //when sending chat messages to a socket, it returns the state of the socket
         //using _ basically discards the returned variable
         _ = socket.WriteChatMessageAsync(channel, content);
 
         MessageInput.text = "";
+    }
+
+    public Transform ChatLogsUI;
+    public GameObject ChatMessagePrefab;
+
+    private void UpdateChat(IApiChannelMessage _message)
+    {
+        string senderID = _message.SenderId.Substring(0, 10);
+
+        GameObject newMessage = Instantiate(ChatMessagePrefab, ChatLogsUI);
+        newMessage.GetComponent<ChatMessage>().SetText(senderID, _message.Content);
+        Debug.Log(_message);
     }
 
     //closes the connection when the game quits
