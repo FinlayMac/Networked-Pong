@@ -3742,6 +3742,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1971419540}
   - component: {fileID: 1971419539}
+  - component: {fileID: 1971419541}
+  - component: {fileID: 1971419542}
   m_Layer: 0
   m_Name: Nakama
   m_TagString: Untagged
@@ -3761,19 +3763,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f4f8e6ec108c649aa2d5db22732607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoginPanel: {fileID: 846434318}
-  ChatRoomPanel: {fileID: 1610958443}
-  MessagePanel: {fileID: 1271356101}
   LoginButton: {fileID: 605170722}
-  JoinRoomButton: {fileID: 1252582530}
-  SendMessageButton: {fileID: 95524349}
   emailInput: {fileID: 1395387442}
   passwordInput: {fileID: 1883445160}
   ErrorLabel: {fileID: 1215798685}
-  MessageInput: {fileID: 986713050}
   Testing: 0
-  ChatLogsUI: {fileID: 1359056021}
-  ChatMessagePrefab: {fileID: 6366847976897143132, guid: 6db04a35f16c4db4e87b3193cc20be25, type: 3}
 --- !u!4 &1971419540
 Transform:
   m_ObjectHideFlags: 0
@@ -3789,6 +3783,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1971419541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971419538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d93c68c0994204b85bf1307d733083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JoinRoomButton: {fileID: 1252582530}
+  SendMessageButton: {fileID: 95524349}
+  MessageInput: {fileID: 986713050}
+  ChatLogsUI: {fileID: 1359056021}
+  ChatMessagePrefab: {fileID: 6366847976897143132, guid: 6db04a35f16c4db4e87b3193cc20be25, type: 3}
+--- !u!114 &1971419542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971419538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538b24403f904504d8a44aedbed92800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowMessagePanel: {fileID: 1271356101}
+  ShowChatRoomsPanel: {fileID: 1610958443}
+  ShowLoginPanel: {fileID: 846434318}
 --- !u!1 &2061342702
 GameObject:
   m_ObjectHideFlags: 0
