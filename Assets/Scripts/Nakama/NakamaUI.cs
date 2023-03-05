@@ -39,4 +39,12 @@ public class NakamaUI : MonoBehaviour
         ShowLoginPanel.SetActive(false);
         ShowGameSearchPanel.SetActive(true);
     }
+
+    public void HideUI()
+    {
+        ShowMessagePanel.SetActive(false);
+        ShowMainMenuPanel.SetActive(false);
+        ShowLoginPanel.SetActive(false);
+        ShowGameSearchPanel.SetActive(false);
+    }
 }

@@ -22,6 +22,7 @@ public class NakamaConnection : MonoBehaviour
     private NakamaChat chat;
     private NakamaUI ui;
     private NakamaLobby lobby;
+    private NakamaJoinMatch join;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class NakamaConnection : MonoBehaviour
 
         chat = GetComponent<NakamaChat>();
         lobby = GetComponent<NakamaLobby>();
+        join = GetComponent<NakamaJoinMatch>();
         ui = GetComponent<NakamaUI>();
         ui.ShowLogin();
 
@@ -40,17 +42,22 @@ public class NakamaConnection : MonoBehaviour
     // Get a reference to the UnityMainThreadDispatcher.
     // We use this to queue event handler callbacks on the main thread.
     // If we did not do this, we would not be able to instantiate objects or manipulate things like UI.
-    private UnityMainThreadDispatcher mainThread;
+    public UnityMainThreadDispatcher mainThread;
     private async void Start() { mainThread = UnityMainThreadDispatcher.Instance(); }
 
-    public bool Testing = true;
+    public int Testing = 0;
     async void SubmitLogin()
     {
         string email;
         string password;
-        if (Testing)
+        if (Testing == 1)
         {
             email = "example@mail.com";
+            password = "password";
+        }
+        else if (Testing == 2)
+        {
+            email = "dave@mail.com";
             password = "password";
         }
         else
@@ -69,7 +76,7 @@ public class NakamaConnection : MonoBehaviour
             ErrorLabel.text = e.Message;
             return;
         }
-       // Debug.Log("Started session " + session);
+        // Debug.Log("Started session " + session);
 
         //creates a new socket and events
         socket = client.NewSocket();
@@ -77,7 +84,7 @@ public class NakamaConnection : MonoBehaviour
         socket.Closed += () => Debug.Log("Socket Closed");
 
         socket.ReceivedChannelMessage += message => mainThread.Enqueue(() => chat.UpdateChat(message));
-
+        socket.ReceivedMatchPresence += match => mainThread.Enqueue(() => join.OnReceivedMatchPresence(match));
         //activates when a match has been found 
         socket.ReceivedMatchmakerMatched += match => mainThread.Enqueue(() => lobby.OnReceivedMatchmakerMatched(match));
 

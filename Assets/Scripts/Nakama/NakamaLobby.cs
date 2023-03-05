@@ -11,12 +11,14 @@ public class NakamaLobby : MonoBehaviour
     public Button CancelSearchButton;
     private NakamaConnection connection;
     private NakamaUI ui;
+    private NakamaJoinMatch join;
     private IMatchmakerTicket currentMatchmakingTicket;
     private string ticket;
     private void Awake()
     {
         connection = GetComponent<NakamaConnection>();
         ui = GetComponent<NakamaUI>();
+        join = GetComponent<NakamaJoinMatch>();
         LookForGameButton.onClick.AddListener(SearchForGame);
         CancelSearchButton.onClick.AddListener(CancelSearch);
     }
@@ -37,7 +39,9 @@ public class NakamaLobby : MonoBehaviour
         MatchConnection newMatchConnection = new MatchConnection(newMatch);
         connection.SetMatchDetails(newMatchConnection);
 
-        SceneManager.LoadScene(1);
+         SceneManager.LoadScene(1);
+        //  join.StartGame();
+        //  ui.HideUI();
     }
 
     private async void CancelSearch()
