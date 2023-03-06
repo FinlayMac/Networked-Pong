@@ -19,7 +19,7 @@ public class PlayerBrain : MonoBehaviour
     void Move(Vector2 newDirection)
     {
         playerDirection = newDirection;
-        Debug.Log("player moved " + newDirection);
+      //  Debug.Log("player moved " + newDirection);
     }
 
     private void Update()

@@ -23,6 +23,7 @@ public class NakamaConnection : MonoBehaviour
     private NakamaUI ui;
     private NakamaLobby lobby;
     private NakamaJoinMatch join;
+    private NakamaState state;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class NakamaConnection : MonoBehaviour
         chat = GetComponent<NakamaChat>();
         lobby = GetComponent<NakamaLobby>();
         join = GetComponent<NakamaJoinMatch>();
+        state = GetComponent<NakamaState>();
         ui = GetComponent<NakamaUI>();
         ui.ShowLogin();
 
@@ -84,9 +86,12 @@ public class NakamaConnection : MonoBehaviour
         socket.Closed += () => Debug.Log("Socket Closed");
 
         socket.ReceivedChannelMessage += message => mainThread.Enqueue(() => chat.UpdateChat(message));
-        socket.ReceivedMatchPresence += match => mainThread.Enqueue(() => join.OnReceivedMatchPresence(match));
         //activates when a match has been found 
         socket.ReceivedMatchmakerMatched += match => mainThread.Enqueue(() => lobby.OnReceivedMatchmakerMatched(match));
+        //activates when a user joins or leaves the game
+        socket.ReceivedMatchPresence += match => mainThread.Enqueue(() => join.OnReceivedMatchPresence(match));
+
+        socket.ReceivedMatchState += state.OnReceivedmatchState;
 
         //actually connects to the socket
         await socket.ConnectAsync(session);

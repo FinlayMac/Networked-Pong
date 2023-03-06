@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1693334803129020418}
   - component: {fileID: 1693334803129020429}
   - component: {fileID: 1693334803129020428}
+  - component: {fileID: 8749722448068275014}
   m_Layer: 0
   m_Name: Player Networked
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1693334803129020418
 SpriteRenderer:
@@ -133,3 +134,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8749722448068275014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693334803129020431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a2d6831ed43414b8965462855fb940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

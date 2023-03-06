@@ -4238,6 +4238,7 @@ GameObject:
   - component: {fileID: 1971419543}
   - component: {fileID: 1971419542}
   - component: {fileID: 1971419544}
+  - component: {fileID: 1971419545}
   m_Layer: 0
   m_Name: Nakama
   m_TagString: Nakama
@@ -4262,7 +4263,7 @@ MonoBehaviour:
   passwordInput: {fileID: 1883445160}
   ErrorLabel: {fileID: 1215798685}
   mainThread: {fileID: 0}
-  Testing: 2
+  Testing: 0
 --- !u!4 &1971419540
 Transform:
   m_ObjectHideFlags: 0
@@ -4339,6 +4340,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localPlayerPrefab: {fileID: 9151492550293205437, guid: 7bd3777fa28c66a47b660e2dcbcb70e4, type: 3}
   networkedPlayerPrefab: {fileID: 1693334803129020431, guid: 681f2eaa7b5f6674390363a459d42bd5, type: 3}
+--- !u!114 &1971419545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971419538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35253663df70a824889e32358a2cdee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061342702
 GameObject:
   m_ObjectHideFlags: 0

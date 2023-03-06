@@ -6,6 +6,7 @@ public class NakamaJoinMatch : MonoBehaviour
 {
 
     private NakamaConnection connection;
+    private NakamaState state;
     private string localUserSessionId;
     public GameObject localPlayerPrefab;
     public GameObject networkedPlayerPrefab;
@@ -14,9 +15,11 @@ public class NakamaJoinMatch : MonoBehaviour
     private void Start()
     {
         connection = GetComponent<NakamaConnection>();
+        state = GetComponent<NakamaState>();
         players = new Dictionary<string, GameObject>();
     }
 
+    string matchID = "";
     public async void StartGame()
     {
 
@@ -27,7 +30,6 @@ public class NakamaJoinMatch : MonoBehaviour
         }
 
         var matchDetails = connection.GetMatchDetails();
-
         //must be set before joining the match
         //when join match async is called, the event OnReceivedMatchPresence is called straight away
         localUserSessionId = matchDetails.Matched.Self.Presence.SessionId;
@@ -35,6 +37,7 @@ public class NakamaJoinMatch : MonoBehaviour
         //actually joins the match
         var match = await connection.GetSocket().JoinMatchAsync(matchDetails.Matched);
 
+        matchID = match.Id;
         //spawn players
         foreach (var user in match.Presences)
         {
@@ -43,6 +46,12 @@ public class NakamaJoinMatch : MonoBehaviour
         }
     }
 
+    public string GetMatchID()
+    {
+        // Debug.LogWarning(" test " + matchDetails.MatchId);
+        // if (matchDetails.MatchId == null) return "";
+        return matchID;
+    }
     private void SpawnPlayer(string matchId, IUserPresence user)
     {
         // Debug.Log("spawning user");
@@ -65,6 +74,14 @@ public class NakamaJoinMatch : MonoBehaviour
             Vector3 position = new Vector3(12, 0, 0);
             player = Instantiate(networkedPlayerPrefab, position, Quaternion.identity);
             // Debug.Log("spawning network");
+            
+            //attaches match data into the gameobject
+            player.GetComponent<PlayerNetworkRemoteSync>().NetworkData = new RemotePlayerNetworkData
+            {
+                MatchId = matchID,
+                User = user
+            };
+
         }
         // Add the player to the players array.
         players.Add(user.SessionId, player);
@@ -73,11 +90,7 @@ public class NakamaJoinMatch : MonoBehaviour
         // Setup the appropriate network data values if this is a remote player.
         // if (!isLocal)
         // {
-        //     player.GetComponent<PlayerNetworkRemoteSync>().NetworkData = new RemotePlayerNetworkData
-        //     {
-        //         MatchId = matchId,
-        //         User = user
-        //     };
+
         // }
 
     }
