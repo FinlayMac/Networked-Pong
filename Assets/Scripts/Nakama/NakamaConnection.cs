@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-
 public class NakamaConnection : MonoBehaviour
 {
     //make sure you use a key for actual deployment
@@ -96,6 +95,7 @@ public class NakamaConnection : MonoBehaviour
         //actually connects to the socket
         await socket.ConnectAsync(session);
 
+        lobby.CanClaimDailyReward();
         //swaps the UI
         ui.ShowMainMenu();
     }
